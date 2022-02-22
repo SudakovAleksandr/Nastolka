@@ -1,0 +1,439 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище NastolinoePrilogenieModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Akaynt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="FormKyrsov">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdKyrs" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="IdVremeni" Type="int" Nullable="false" />
+          <Property Name="Ydostoverenie" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdPrepod" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdYchenik" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kyrsi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameKyrsa" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Vremia" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prepod">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ima" Type="nvarchar" MaxLength="60" />
+          <Property Name="Familia" Type="nvarchar" MaxLength="60" />
+          <Property Name="IdKyrs" Type="nvarchar" MaxLength="80" />
+          <Property Name="Telefon" Type="nvarchar" MaxLength="11" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Ycheniki">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ima" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Familia" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="IdKyrs" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FormKyrsov_Akaynt">
+          <End Role="Akaynt" Type="Self.Akaynt" Multiplicity="1" />
+          <End Role="FormKyrsov" Type="Self.FormKyrsov" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Akaynt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FormKyrsov">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormKyrsov_Kyrsi">
+          <End Role="Kyrsi" Type="Self.Kyrsi" Multiplicity="1" />
+          <End Role="FormKyrsov" Type="Self.FormKyrsov" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Kyrsi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FormKyrsov">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormKyrsov_Prepod">
+          <End Role="Prepod" Type="Self.Prepod" Multiplicity="1" />
+          <End Role="FormKyrsov" Type="Self.FormKyrsov" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Prepod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FormKyrsov">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormKyrsov_Ycheniki">
+          <End Role="Ycheniki" Type="Self.Ycheniki" Multiplicity="1" />
+          <End Role="FormKyrsov" Type="Self.FormKyrsov" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ycheniki">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FormKyrsov">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kyrsi_Prepod">
+          <End Role="Prepod" Type="Self.Prepod" Multiplicity="1" />
+          <End Role="Kyrsi" Type="Self.Kyrsi" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Prepod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Kyrsi">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ycheniki_Kyrsi">
+          <End Role="Kyrsi" Type="Self.Kyrsi" Multiplicity="1" />
+          <End Role="Ycheniki" Type="Self.Ycheniki" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Kyrsi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ycheniki">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище NastolinoePrilogenieModelContainer">
+          <EntitySet Name="Akaynt" EntityType="Self.Akaynt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FormKyrsov" EntityType="Self.FormKyrsov" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kyrsi" EntityType="Self.Kyrsi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prepod" EntityType="Self.Prepod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ycheniki" EntityType="Self.Ycheniki" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FormKyrsov_Akaynt" Association="Self.FK_FormKyrsov_Akaynt">
+            <End Role="Akaynt" EntitySet="Akaynt" />
+            <End Role="FormKyrsov" EntitySet="FormKyrsov" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormKyrsov_Kyrsi" Association="Self.FK_FormKyrsov_Kyrsi">
+            <End Role="Kyrsi" EntitySet="Kyrsi" />
+            <End Role="FormKyrsov" EntitySet="FormKyrsov" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormKyrsov_Prepod" Association="Self.FK_FormKyrsov_Prepod">
+            <End Role="Prepod" EntitySet="Prepod" />
+            <End Role="FormKyrsov" EntitySet="FormKyrsov" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormKyrsov_Ycheniki" Association="Self.FK_FormKyrsov_Ycheniki">
+            <End Role="Ycheniki" EntitySet="Ycheniki" />
+            <End Role="FormKyrsov" EntitySet="FormKyrsov" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kyrsi_Prepod" Association="Self.FK_Kyrsi_Prepod">
+            <End Role="Prepod" EntitySet="Prepod" />
+            <End Role="Kyrsi" EntitySet="Kyrsi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ycheniki_Kyrsi" Association="Self.FK_Ycheniki_Kyrsi">
+            <End Role="Kyrsi" EntitySet="Kyrsi" />
+            <End Role="Ycheniki" EntitySet="Ycheniki" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NastolinoePrilogenieModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Akaynt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FormKyrsov" Relationship="Self.FK_FormKyrsov_Akaynt" FromRole="Akaynt" ToRole="FormKyrsov" />
+        </EntityType>
+        <EntityType Name="FormKyrsov">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdKyrs" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdVremeni" Type="Int32" Nullable="false" />
+          <Property Name="Ydostoverenie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdPrepod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdYchenik" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Akaynt" Relationship="Self.FK_FormKyrsov_Akaynt" FromRole="FormKyrsov" ToRole="Akaynt" />
+          <NavigationProperty Name="Kyrsi" Relationship="Self.FK_FormKyrsov_Kyrsi" FromRole="FormKyrsov" ToRole="Kyrsi" />
+          <NavigationProperty Name="Prepod" Relationship="Self.FK_FormKyrsov_Prepod" FromRole="FormKyrsov" ToRole="Prepod" />
+          <NavigationProperty Name="Ycheniki" Relationship="Self.FK_FormKyrsov_Ycheniki" FromRole="FormKyrsov" ToRole="Ycheniki" />
+        </EntityType>
+        <EntityType Name="Kyrsi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameKyrsa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Vremia" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FormKyrsov" Relationship="Self.FK_FormKyrsov_Kyrsi" FromRole="Kyrsi" ToRole="FormKyrsov" />
+          <NavigationProperty Name="Prepod" Relationship="Self.FK_Kyrsi_Prepod" FromRole="Kyrsi" ToRole="Prepod" />
+          <NavigationProperty Name="Ycheniki" Relationship="Self.FK_Ycheniki_Kyrsi" FromRole="Kyrsi" ToRole="Ycheniki" />
+        </EntityType>
+        <EntityType Name="Prepod">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ima" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Familia" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="IdKyrs" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FormKyrsov" Relationship="Self.FK_FormKyrsov_Prepod" FromRole="Prepod" ToRole="FormKyrsov" />
+          <NavigationProperty Name="Kyrsi" Relationship="Self.FK_Kyrsi_Prepod" FromRole="Prepod" ToRole="Kyrsi" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Ycheniki">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ima" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Familia" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdKyrs" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FormKyrsov" Relationship="Self.FK_FormKyrsov_Ycheniki" FromRole="Ycheniki" ToRole="FormKyrsov" />
+          <NavigationProperty Name="Kyrsi" Relationship="Self.FK_Ycheniki_Kyrsi" FromRole="Ycheniki" ToRole="Kyrsi" />
+        </EntityType>
+        <Association Name="FK_FormKyrsov_Akaynt">
+          <End Role="Akaynt" Type="Self.Akaynt" Multiplicity="1" />
+          <End Role="FormKyrsov" Type="Self.FormKyrsov" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Akaynt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FormKyrsov">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormKyrsov_Kyrsi">
+          <End Role="Kyrsi" Type="Self.Kyrsi" Multiplicity="1" />
+          <End Role="FormKyrsov" Type="Self.FormKyrsov" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Kyrsi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FormKyrsov">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormKyrsov_Prepod">
+          <End Role="Prepod" Type="Self.Prepod" Multiplicity="1" />
+          <End Role="FormKyrsov" Type="Self.FormKyrsov" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Prepod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FormKyrsov">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FormKyrsov_Ycheniki">
+          <End Role="Ycheniki" Type="Self.Ycheniki" Multiplicity="1" />
+          <End Role="FormKyrsov" Type="Self.FormKyrsov" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ycheniki">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FormKyrsov">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kyrsi_Prepod">
+          <End Role="Prepod" Type="Self.Prepod" Multiplicity="1" />
+          <End Role="Kyrsi" Type="Self.Kyrsi" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Prepod">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Kyrsi">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ycheniki_Kyrsi">
+          <End Role="Kyrsi" Type="Self.Kyrsi" Multiplicity="1" />
+          <End Role="Ycheniki" Type="Self.Ycheniki" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Kyrsi">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ycheniki">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NastolinoePrilogenieEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Akaynt" EntityType="Self.Akaynt" />
+          <EntitySet Name="FormKyrsov" EntityType="Self.FormKyrsov" />
+          <EntitySet Name="Kyrsi" EntityType="Self.Kyrsi" />
+          <EntitySet Name="Prepod" EntityType="Self.Prepod" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Ycheniki" EntityType="Self.Ycheniki" />
+          <AssociationSet Name="FK_FormKyrsov_Akaynt" Association="Self.FK_FormKyrsov_Akaynt">
+            <End Role="Akaynt" EntitySet="Akaynt" />
+            <End Role="FormKyrsov" EntitySet="FormKyrsov" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormKyrsov_Kyrsi" Association="Self.FK_FormKyrsov_Kyrsi">
+            <End Role="Kyrsi" EntitySet="Kyrsi" />
+            <End Role="FormKyrsov" EntitySet="FormKyrsov" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormKyrsov_Prepod" Association="Self.FK_FormKyrsov_Prepod">
+            <End Role="Prepod" EntitySet="Prepod" />
+            <End Role="FormKyrsov" EntitySet="FormKyrsov" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FormKyrsov_Ycheniki" Association="Self.FK_FormKyrsov_Ycheniki">
+            <End Role="Ycheniki" EntitySet="Ycheniki" />
+            <End Role="FormKyrsov" EntitySet="FormKyrsov" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kyrsi_Prepod" Association="Self.FK_Kyrsi_Prepod">
+            <End Role="Prepod" EntitySet="Prepod" />
+            <End Role="Kyrsi" EntitySet="Kyrsi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ycheniki_Kyrsi" Association="Self.FK_Ycheniki_Kyrsi">
+            <End Role="Kyrsi" EntitySet="Kyrsi" />
+            <End Role="Ycheniki" EntitySet="Ycheniki" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище NastolinoePrilogenieModelContainer" CdmEntityContainer="NastolinoePrilogenieEntities">
+          <EntitySetMapping Name="Akaynt">
+            <EntityTypeMapping TypeName="NastolinoePrilogenieModel.Akaynt">
+              <MappingFragment StoreEntitySet="Akaynt">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FormKyrsov">
+            <EntityTypeMapping TypeName="NastolinoePrilogenieModel.FormKyrsov">
+              <MappingFragment StoreEntitySet="FormKyrsov">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdKyrs" ColumnName="IdKyrs" />
+                <ScalarProperty Name="IdVremeni" ColumnName="IdVremeni" />
+                <ScalarProperty Name="Ydostoverenie" ColumnName="Ydostoverenie" />
+                <ScalarProperty Name="IdPrepod" ColumnName="IdPrepod" />
+                <ScalarProperty Name="IdYchenik" ColumnName="IdYchenik" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kyrsi">
+            <EntityTypeMapping TypeName="NastolinoePrilogenieModel.Kyrsi">
+              <MappingFragment StoreEntitySet="Kyrsi">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NameKyrsa" ColumnName="NameKyrsa" />
+                <ScalarProperty Name="Vremia" ColumnName="Vremia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prepod">
+            <EntityTypeMapping TypeName="NastolinoePrilogenieModel.Prepod">
+              <MappingFragment StoreEntitySet="Prepod">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ima" ColumnName="Ima" />
+                <ScalarProperty Name="Familia" ColumnName="Familia" />
+                <ScalarProperty Name="IdKyrs" ColumnName="IdKyrs" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="NastolinoePrilogenieModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ycheniki">
+            <EntityTypeMapping TypeName="NastolinoePrilogenieModel.Ycheniki">
+              <MappingFragment StoreEntitySet="Ycheniki">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ima" ColumnName="Ima" />
+                <ScalarProperty Name="Familia" ColumnName="Familia" />
+                <ScalarProperty Name="IdKyrs" ColumnName="IdKyrs" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
